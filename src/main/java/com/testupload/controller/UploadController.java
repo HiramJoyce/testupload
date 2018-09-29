@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("upload")
@@ -22,9 +24,8 @@ public class UploadController {
 
     @PostMapping("img")
     @CrossOrigin
-    public String uploadImg(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-//        String contextPath = request.getSession().getServletContext().getRealPath("/");
-        String contextPath = "D:/workspace/IdeaProjects/uploadImgs/";
+    public String uploadImg(@RequestParam("file") MultipartFile file) {
+        String contextPath = "D:/workspace/IdeaProjects/uploadImgs/";   // 临时写死地址，实际项目需要自定义
         if (!file.isEmpty()) {
             try {
                 BufferedOutputStream out = new BufferedOutputStream(
@@ -38,11 +39,11 @@ public class UploadController {
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("no");
-                return "上传失败," + e.getMessage();
+                return "no";
             }
         } else {
             System.out.println("null");
-            return "上传失败，因为文件是空的.";
+            return "null";
         }
     }
 }
